@@ -21,8 +21,13 @@ jobs:
 
 
       - name: Create deployment package
-        run: |          
-          zip -r ../function.zip . -i .
+        run: |
+          mkdir -p package
+          cp -r * package/
+          cd package
+          zip -r ../function.zip .
+          cd ..
+
 
 
       - uses: hkusu/s3-upload-action@v2
