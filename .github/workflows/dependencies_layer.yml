@@ -31,7 +31,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'uu-north-1'
+          AWS_REGION: 'eu-north-1'
         run: |
           aws s3 cp dependencies_layer.zip s3://bucket-fastapi-test-dependencies-layer/dependencies_layer.zip
 
@@ -40,15 +40,15 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'us-east-1'
+          AWS_REGION: 'eu-north-1'
         run: |
-          aws lambda publish-layer-version --layer-name dependencies_layer --description "Dependencies for my lambda function" --content S3Bucket=fastapi-test-dependencies-layer,S3Key=dependencies_layer.zip --compatible-runtimes python3.8
+          aws lambda publish-layer-version --layer-name dependencies_layer --description "Dependencies for my lambda function" --content S3Bucket=fastapi-test-dependencies-layer,S3Key=dependencies_layer.zip --compatible-runtimes python3.11
 
       - name: Update Lambda function to use new layer
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'us-east-1'
+          AWS_REGION: 'eu-north-1'
         run: |
           LAYER_VERSION_ARN=$(aws lambda list-layer-versions --layer-name dependencies_layer --query 'LayerVersions[0].LayerVersionArn' --output text)
           aws lambda update-function-configuration --function-name your_lambda_function_name --layers $LAYER_VERSION_ARN
