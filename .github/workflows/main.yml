@@ -17,14 +17,17 @@ jobs:
           
           zip -r ../function.zip .
 
-      - name: Upload to S3
 
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'eu-north-1'
-        run: |
-          aws s3 cp function.zip s3://bucket-fastapi-test/v1.0.0/function.zip
+      - uses: hkusu/s3-upload-action@v2
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: 'eu-north-1'
+            aws-bucket: 's3://bucket-fastapi-test/v1.0.0/function.zip'
+            file-path: '../function.zip'
+
+
+
 
       - name: Update Lambda function
         env:
