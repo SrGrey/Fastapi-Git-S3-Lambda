@@ -47,6 +47,7 @@ jobs:
         run: |
           aws s3 cp ../function.zip s3://bucket-fastapi-test/function.zip
 
+
       - name: List S3 contents new
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
