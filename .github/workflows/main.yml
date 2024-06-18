@@ -12,7 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -21,13 +22,8 @@ jobs:
 
 
       - name: Create deployment package
-        run: |
-          mkdir -p package
-          cp -r * package/
-          cd package
-          zip -r ../function.zip .
-          cd ..
-
+        run: |          
+          zip -r ../function.zip . -i .
 
 
       - uses: hkusu/s3-upload-action@v2
