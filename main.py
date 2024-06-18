@@ -8,7 +8,7 @@ handler = Mangum(app)
 
 @app.get("/")
 async def hello():
-    return {"message":"hello from FastAPI app"}
+    return {"message": "IDE GitHub S3 Lambda - CI/CD test"}
 
 
 @app.get("/fastapi")
