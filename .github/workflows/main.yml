@@ -35,13 +35,17 @@ jobs:
         run: |
           aws s3 ls s3://bucket-fastapi-test/
 
-      - uses: hkusu/s3-upload-action@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: 'eu-north-1'
-            aws-bucket: 'bucket-fastapi-test'
-            file-path: '../function.zip'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'eu-north-1'
+
+      - name: Upload to S3
+        run: |
+          aws s3 cp ../function.zip s3://bucket-fastapi-test/function.zip
 
       - name: List S3 contents new
         env:
