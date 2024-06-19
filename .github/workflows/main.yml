@@ -24,6 +24,7 @@ jobs:
       - name: Create deployment package
         run: |
           cd ..
+          cd ..
           zip -r function.zip . -x ".*" -x "*/.*" -x "venv/*" -x "__pycache__/*" -x "*.pyc"
 
 
